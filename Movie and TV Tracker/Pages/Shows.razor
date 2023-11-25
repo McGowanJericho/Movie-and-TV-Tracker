@@ -1,47 +1,75 @@
 ﻿@page "/shows"
 @inject HttpClient HttpClient
 @using Movie_and_TV_Tracker.Data.Models
+@inject NavigationManager NavigationManager
 
-<h3>Add TV Show</h3>
+<h3>TV Shows</h3>
 
 <div>
     <label>Name:</label>
-    <input @bind="show.name" />
+    <input @bind="tvShow.name" />
 </div>
 <div>
     <label>Release Date:</label>
-    <input @bind="show.release_date" />
+    <input @bind="tvShow.release_date" />
 </div>
 <div>
     <label>Number of Episodes:</label>
-    <input @bind="show.number_of_episodes" type="number" />
+    <input @bind="tvShow.number_of_episodes" type="number" />
 </div>
 <div>
     <label>Watch Status:</label>
-    <select @bind="show.watch_status">
+    <select @bind="tvShow.watch_status">
         <option value="Want to Watch">Want to Watch</option>
         <option value="Watching">Watching</option>
         <option value="Dropped">Dropped</option>
     </select>
 </div>
 <br />
-<button @onclick="AddShow">Add TV Show</button>
+<br />
+<br />
+<button @onclick="AddTVShow">Add TV Show</button>
 
-<br />
-<br />
-<br />
-
-<h3>TV Shows</h3>
+@if (showEditForm)
+{
+    <div>
+        <h4>Edit TV Show</h4>
+        <div>
+            <label>Name:</label>
+            <input @bind="selectedTVShow.name" />
+        </div>
+        <div>
+            <label>Release Date:</label>
+            <input @bind="selectedTVShow.release_date" />
+        </div>
+        <div>
+            <label>Number of Episodes:</label>
+            <input @bind="selectedTVShow.number_of_episodes" type="number" />
+        </div>
+        <div>
+            <label>Watch Status:</label>
+            <select @bind="selectedTVShow.watch_status">
+                <option value="Want to Watch">Want to Watch</option>
+                <option value="Watching">Watching</option>
+                <option value="Dropped">Dropped</option>
+            </select>
+        </div>
+        <br />
+        <button @onclick="UpdateTVShow">Update TV Show</button>
+        <button @onclick="CancelEdit">Cancel</button>
+    </div>
+}
 
 @if (tvShows == null)
 {
-    <p><em>Empty... Suspicious... Server is likely not running. Double check to make sure it is</em></p>
+    <p><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
+                <th>Options</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Release Date</th>
@@ -50,14 +78,21 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var show in tvShows)
+            @foreach (var tvShow in tvShows)
             {
                 <tr>
-                    <td>@show.id</td>
-                    <td>@show.name</td>
-                    <td>@show.release_date</td>
-                    <td>@show.number_of_episodes</td>
-                    <td>@show.watch_status</td>
+                    <td>
+                        <!-- Edit button -->
+                        <button @onclick="() => ShowEditForm(tvShow)">Edit</button>
+
+                        <!-- Delete button -->
+                        <button @onclick="() => DeleteTVShow(tvShow.id)">Delete</button>
+                    </td>
+                    <td>@tvShow.id</td>
+                    <td>@tvShow.name</td>
+                    <td>@tvShow.release_date</td>
+                    <td>@tvShow.number_of_episodes</td>
+                    <td>@tvShow.watch_status</td>
                 </tr>
             }
         </tbody>
@@ -66,37 +101,108 @@ else
 
 @code {
     private List<TVShow> tvShows;
+    private bool showEditForm = false;
+    private TVShow selectedTVShow;
 
-    private TVShowInputObject show = new TVShowInputObject();
-
-    private async Task AddShow()
-    {
-        try
-        {
-            HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
-            await HttpClient.PostAsJsonAsync("/tvshows/", new
-            {
-                name = show.name,
-                release_date = show.release_date,
-                number_of_episodes = show.number_of_episodes,
-                watch_status = show.watch_status
-            });
-            // Refresh the TV show list after adding a new show
-            tvShows = await HttpClient.GetFromJsonAsync<List<TVShow>>("/tvshows");
-            Console.WriteLine("Added TV show successfully");
-            show = new TVShowInputObject();
-        }
-        catch (Exception ex)
-        {
-            // Handle error
-            Console.WriteLine($"Error adding TV show: {ex.Message}");
-        }
-    }
-
-    // Fetch TV shows when the component is initialized
     protected override async Task OnInitializedAsync()
     {
         HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
         tvShows = await HttpClient.GetFromJsonAsync<List<TVShow>>("/tvshows");
+    }
+
+    private TVShowInputObject tvShow = new TVShowInputObject();
+
+    private async Task AddTVShow()
+    {
+        try
+        {
+            Console.WriteLine("Add TV Show button clicked");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.PostAsJsonAsync("/tvshows/", new
+                {
+                    name = tvShow.name,
+                    release_date = tvShow.release_date,
+                    number_of_episodes = tvShow.number_of_episodes,
+                    watch_status = tvShow.watch_status
+                });
+
+                tvShows = await client.GetFromJsonAsync<List<TVShow>>("/tvshows");
+            }
+
+            Console.WriteLine("Added TV show successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding TV show: {ex.Message}");
+        }
+    }
+
+    private void ShowEditForm(TVShow tvShow)
+    {
+        selectedTVShow = tvShow;
+        showEditForm = true;
+    }
+
+    private void CancelEdit()
+    {
+        showEditForm = false;
+        selectedTVShow = null;
+    }
+
+    private async Task UpdateTVShow()
+    {
+        try
+        {
+            Console.WriteLine("Update TV Show button clicked");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.PutAsJsonAsync($"/tvshows/{selectedTVShow.id}", new
+                {
+                    name = selectedTVShow.name,
+                    release_date = selectedTVShow.release_date,
+                    number_of_episodes = selectedTVShow.number_of_episodes,
+                    watch_status = selectedTVShow.watch_status
+                });
+
+                tvShows = await client.GetFromJsonAsync<List<TVShow>>("/tvshows");
+            }
+
+            Console.WriteLine("Updated TV show successfully");
+            showEditForm = false;
+            selectedTVShow = null;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating TV show: {ex.Message}");
+        }
+    }
+
+    private async Task DeleteTVShow(int tvShowId)
+    {
+        try
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.DeleteAsync($"/tvshows/{tvShowId}");
+
+                // Refresh the list of TV shows after deletion
+                tvShows = await client.GetFromJsonAsync<List<TVShow>>("/tvshows");
+            }
+
+            Console.WriteLine($"Deleted TV show with ID {tvShowId} successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting TV show: {ex.Message}");
+        }
     }
 }
