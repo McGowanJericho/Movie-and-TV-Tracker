@@ -1,15 +1,43 @@
 ﻿@page "/movies"
 @inject HttpClient HttpClient
 @using Movie_and_TV_Tracker.Data.Models
+@inject NavigationManager NavigationManager
 
 <h3>Movies</h3>
 
+<div>
+    <label>Title:</label>
+    <input @bind="movie.title" />
+</div>
+<div>
+    <label>Release Date:</label>
+    <input @bind="movie.release_date" />
+</div>
+<div>
+    <label>Runtime (min):</label>
+    <input @bind="movie.runtime_in_min" type="number" />
+</div>
+<div>
+    <label>Watch Status:</label>
+    <select @bind="movie.watch_status">
+        <option value="Want to Watch">Want to Watch</option>
+        <option value="Watching">Watching</option>
+        <option value="Dropped">Dropped</option>
+    </select>
+</div>
+<br />
+<br />
+<br />
+<button @onclick="AddMovie">Add Movie</button>
 @if (movies == null)
 {
     <p><em>Empty... Suspicious... Server is likely not running. Double check to make sure it is</em></p>
 }
 else
 {
+
+
+  
     <table class="table">
         <thead>
             <tr>
@@ -24,6 +52,13 @@ else
             @foreach (var movie in movies)
             {
                 <tr>
+                    <td>
+                        <!-- Edit button -->
+                        <button @onclick="() => EditMovie(movie)">Edit</button>
+
+                        <!-- Delete button -->
+                        <button @onclick="() => DeleteMovie(movie.id)">Delete</button>
+                    </td>
                     <td>@movie.id</td>
                     <td>@movie.title</td>
                     <td>@movie.release_date</td>
@@ -42,5 +77,70 @@ else
     {
         HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
         movies = await HttpClient.GetFromJsonAsync<List<Movie>>("/movies");
+    }
+    private MovieInputObject movie = new MovieInputObject();
+
+
+    private async Task AddMovie()
+    {
+        try
+        {
+            Console.WriteLine("Add Movie button clicked");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.PostAsJsonAsync("/movies/", new
+                {
+                    title = movie.title,
+                    release_date = movie.release_date,
+                    runtime_in_min = movie.runtime_in_min,
+                    watch_status = movie.watch_status
+                });
+
+                movies = await client.GetFromJsonAsync<List<Movie>>("/movies");
+            }
+
+            Console.WriteLine("Added movie successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding movie: {ex.Message}");
+        }
+    }
+   
+    private void EditMovie(Movie movie)
+    {
+        // Populate the updatedMovie object with the details of the selected movie
+       //updatedMovie.id = movie.id;
+       //updatedMovie.title = movie.title;
+       //updatedMovie.release_date = movie.release_date;
+       //updatedMovie.runtime_in_min = movie.runtime_in_min;
+       //updatedMovie.watch_status = movie.watch_status;
+
+        // You can navigate to an edit page passing the updatedMovie object
+        // NavigateTo("/edit-movie", updatedMovie);
+    }
+    private async Task DeleteMovie(int movieId)
+    {
+        try
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.DeleteAsync($"/movies/{movieId}");
+
+                // Refresh the list of movies after deletion
+                movies = await client.GetFromJsonAsync<List<Movie>>("/movies");
+            }
+
+            Console.WriteLine($"Deleted movie with ID {movieId} successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting movie: {ex.Message}");
+        }
     }
 }
