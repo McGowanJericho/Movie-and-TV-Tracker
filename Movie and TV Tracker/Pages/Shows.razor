@@ -1,0 +1,47 @@
+﻿@page "/shows"
+@inject HttpClient HttpClient
+@using Movie_and_TV_Tracker.Data.Models
+
+<h3>TV Shows</h3>
+
+@if (tvShows == null)
+{
+    <p><em>Empty... Suspicious... Server is likely not running. Double check to make sure it is</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Release Date</th>
+                <th>Number of Episodes</th>
+                <th>Watch Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var show in tvShows)
+            {
+                <tr>
+                    <td>@show.id</td>
+                    <td>@show.name</td>
+                    <td>@show.release_date</td>
+                    <td>@show.number_of_episodes</td>
+                    <td>@show.watch_status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<TVShow> tvShows;
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
+        tvShows = await HttpClient.GetFromJsonAsync<List<TVShow>>("/tvshows");
+    }
+}
+

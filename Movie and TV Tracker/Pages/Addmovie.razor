@@ -1,0 +1,61 @@
+﻿@page "/addmovie"
+@using Movie_and_TV_Tracker.Data.Models
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<h3>Add Movie</h3>
+
+<div>
+    <label>Title:</label>
+    <input @bind="movie.title" />
+</div>
+<div>
+    <label>Release Date:</label>
+    <input @bind="movie.release_date" />
+</div>
+<div>
+    <label>Runtime (min):</label>
+    <input @bind="movie.runtime_in_min" type="number" />
+</div>
+<div>
+    <label>Watch Status:</label>
+    <select @bind="movie.watch_status">
+        <option value="Want to Watch">Want to Watch</option>
+        <option value="Watching">Watching</option>
+        <option value="Dropped">Dropped</option>
+    </select>
+</div>
+
+<button @onclick="AddMovie">Add Movie</button>
+
+@code {
+
+    private MovieInputObject movie = new MovieInputObject();
+  
+
+    private async Task AddMovie()
+    {
+        try
+        {
+          
+        
+            HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
+            await HttpClient.PostAsJsonAsync("/movies/", new
+            {
+                title = movie.title,
+                release_date = movie.release_date,
+                runtime_in_min = movie.runtime_in_min,
+                watch_status = movie.watch_status
+            });
+            NavigationManager.NavigateTo("/movies");
+            Console.WriteLine("Added movie successfully");
+        }
+        catch (Exception ex)
+        {
+            // Handle error
+            Console.WriteLine($"Error adding movie: {ex.Message}");
+        }
+    }
+
+
+}

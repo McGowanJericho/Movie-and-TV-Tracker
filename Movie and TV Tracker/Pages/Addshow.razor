@@ -1,0 +1,55 @@
+﻿@page "/addshow"
+@using Movie_and_TV_Tracker.Data.Models
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<h3>Add TV Show</h3>
+
+<div>
+    <label>Name:</label>
+    <input @bind="show.name" />
+</div>
+<div>
+    <label>Release Date:</label>
+    <input @bind="show.release_date" />
+</div>
+<div>
+    <label>Number of Episodes:</label>
+    <input @bind="show.number_of_episodes" type="number" />
+</div>
+<div>
+    <label>Watch Status:</label>
+    <select @bind="show.watch_status">
+        <option value="Want to Watch">Want to Watch</option>
+        <option value="Watching">Watching</option>
+        <option value="Dropped">Dropped</option>
+    </select>
+</div>
+
+<button @onclick="AddShow">Add TV Show</button>
+
+@code {
+    private TVShowInputObject show = new TVShowInputObject();
+
+    private async Task AddShow()
+    {
+        try
+        {
+            HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
+            await HttpClient.PostAsJsonAsync("/tvshows/", new
+            {
+                name = show.name,
+                release_date = show.release_date,
+                number_of_episodes = show.number_of_episodes,
+                watch_status = show.watch_status
+            });
+            NavigationManager.NavigateTo("/tvshows");
+            Console.WriteLine("Added TV show successfully");
+        }
+        catch (Exception ex)
+        {
+            // Handle error
+            Console.WriteLine($"Error adding TV show: {ex.Message}");
+        }
+    }
+}
