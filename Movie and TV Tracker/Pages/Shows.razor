@@ -184,7 +184,7 @@ else
         }
     }
 
-    private async Task DeleteTVShow(int tvShowId)
+    private async Task DeleteTVShow(int tvShowID)
     {
         try
         {
@@ -192,13 +192,13 @@ else
             {
                 client.BaseAddress = new Uri("http://127.0.0.1:8000");
 
-                await client.DeleteAsync($"/tvshows/{tvShowId}");
+                await client.DeleteAsync($"/tvshows/{tvShowID}");
 
                 // Refresh the list of TV shows after deletion
                 tvShows = await client.GetFromJsonAsync<List<TVShow>>("/tvshows");
             }
 
-            Console.WriteLine($"Deleted TV show with ID {tvShowId} successfully");
+            Console.WriteLine($"Deleted TV show with ID {tvShowID} successfully");
         }
         catch (Exception ex)
         {

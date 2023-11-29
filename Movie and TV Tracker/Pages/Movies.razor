@@ -189,7 +189,7 @@ else
             Console.WriteLine($"Error updating movie: {ex.Message}");
         }
     }
-    private async Task DeleteMovie(int movieId)
+    private async Task DeleteMovie(int movieID)
     {
         try
         {
@@ -197,13 +197,13 @@ else
             {
                 client.BaseAddress = new Uri("http://127.0.0.1:8000");
 
-                await client.DeleteAsync($"/movies/{movieId}");
+                await client.DeleteAsync($"/movies/{movieID}");
 
                 // Refresh the list of movies after deletion
                 movies = await client.GetFromJsonAsync<List<Movie>>("/movies");
             }
 
-            Console.WriteLine($"Deleted movie with ID {movieId} successfully");
+            Console.WriteLine($"Deleted movie with ID {movieID} successfully");
         }
         catch (Exception ex)
         {
