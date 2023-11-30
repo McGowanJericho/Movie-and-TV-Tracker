@@ -3,82 +3,78 @@
 @using Movie_and_TV_Tracker.Data.Models
 @inject NavigationManager NavigationManager
 
-<h3>Movies</h3>
+<h3 style="color: darkorange;">Movie Tracker List</h3>
 
-<div>
-    <label>Title:</label>
+<div class="input-container">
+    <label style="color: darkorange;">Title:</label>
     <input @bind="movie.title" />
 </div>
-<div>
-    <label>Release Date:</label>
+<div class="input-container">
+    <label style="color: darkorange;">Release Date:</label>
     <input @bind="movie.release_date" />
 </div>
-<div>
-    <label>Runtime (min):</label>
+<div class="input-container">
+    <label style="color: darkorange;">Runtime (min):</label>
     <input @bind="movie.runtime_in_min" type="number" />
 </div>
-<div>
-    <label>Watch Status:</label>
+<div class="input-container">
+    <label style="color: darkorange;">Watch Status:</label>
     <select @bind="movie.watch_status">
-        <option value="Want to Watch">Want to Watch</option>
-        <option value="Watching">Watching</option>
-        <option value="Dropped">Dropped</option>
+        <option value="Want to Watch" style="color: darkorange;"></option>
+        <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+        <option value="Watching" style="color: darkorange;">Watched</option>
     </select>
 </div>
 <br />
 <br />
 <br />
-<button @onclick="AddMovie">Add Movie</button>
+<button class="action-button" style="background-color: darkorange; color: black;" @onclick="AddMovie">Add Movie</button>
 
 @if (showEditForm)
 {
-    <div>
-        <h4>Edit Movie</h4>
-        <div>
-            <label>Title:</label>
+    <div class="edit-form">
+        <h4 style="color: darkorange;">Edit Movie</h4>
+        <div class="input-container">
+            <label style="color: darkorange;">Title:</label>
             <input @bind="selectedMovie.title" />
         </div>
-        <div>
-            <label>Release Date:</label>
+        <div class="input-container">
+            <label style="color: darkorange;">Release Date:</label>
             <input @bind="selectedMovie.release_date" />
         </div>
-        <div>
-            <label>Runtime (min):</label>
+        <div class="input-container">
+            <label style="color: darkorange;">Runtime (min):</label>
             <input @bind="selectedMovie.runtime_in_min" type="number" />
         </div>
-        <div>
-            <label>Watch Status:</label>
+        <div class="input-container">
+            <label style="color: darkorange;">Watch Status:</label>
             <select @bind="selectedMovie.watch_status">
-                <option value="Want to Watch">Want to Watch</option>
-                <option value="Watching">Watching</option>
-                <option value="Dropped">Dropped</option>
+                <option value="Want to Watch" style="color: darkorange;"></option>
+                <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+                <option value="Watched" style="color: darkorange;">Watched</option>
             </select>
         </div>
         <br />
-        <button @onclick="UpdateMovie">Update Movie</button>
-        <button @onclick="CancelEdit">Cancel</button>
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="UpdateMovie">Update Movie</button>
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="CancelEdit">Cancel</button>
     </div>
 }
 
-
 @if (movies == null)
 {
-    <p><em>Empty... Suspicious... Server is likely not running. Double check to make sure it is</em></p>
+    <p style="color: darkorange;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
 }
 else
 {
-
-
-  
-    <table class="table">
+    <table class="movie-table">
         <thead>
             <tr>
-                <th>Options</th>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Release Date</th>
-                <th>Runtime (min)</th>
-                <th>Watch Status</th>
+                <th style="color: darkorange; width: 15%;">Options</th>
+                <th style="color: darkorange">ID</th>
+                <th style="color: darkorange">Title</th>
+                <th style="color: darkorange">Release Date</th>
+                <th style="color: darkorange">Runtime (min)</th>
+                <th style="color: darkorange">Watch Status</th>
             </tr>
         </thead>
         <tbody>
@@ -86,22 +82,60 @@ else
             {
                 <tr>
                     <td>
-                        <!-- Edit button -->
-                        <button @onclick="() => ShowEditForm(movie)">Edit</button>
-
-                        <!-- Delete button -->
-                        <button @onclick="() => DeleteMovie(movie.id)">Delete</button>
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => ShowEditForm(movie)">Edit</button>
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => DeleteMovie(movie.id)">Delete</button>
                     </td>
-                    <td>@movie.id</td>
-                    <td>@movie.title</td>
-                    <td>@movie.release_date</td>
-                    <td>@movie.runtime_in_min</td>
-                    <td>@movie.watch_status</td>
+                    <td style="color: darkorange;">@movie.id</td>
+                    <td style="color: darkorange;">@movie.title</td>
+                    <td style="color: darkorange;">@movie.release_date</td>
+                    <td style="color: darkorange;">@movie.runtime_in_min</td>
+                    <td style="color: darkorange;">@movie.watch_status</td>
                 </tr>
             }
         </tbody>
     </table>
 }
+<style>
+    .input-container {
+        margin-bottom: 10px;
+    }
+
+        .input-container input,
+        .input-container select {
+            background-color: #333; 
+            color: white; 
+            border: 1px solid darkorange; 
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+    .action-button {
+        border: none;
+        padding: 8px 12px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .edit-form {
+        border: 2px solid darkorange;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .movie-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .movie-table th,
+        .movie-table td {
+            border: 1px solid darkorange;
+            padding: 8px;
+            text-align: left;
+        }
+</style>
+
 
 @code {
     private List<Movie> movies;
@@ -146,7 +180,7 @@ else
         }
     }
    
-    private void ShowEditForm(Movie movie)
+    private void ShowEditForm(Movie movie) //Checks to see if the edit form should be open.
     {
         Console.WriteLine("ShowEditForm called");
         selectedMovie = movie;
@@ -154,12 +188,12 @@ else
     }
 
     // Method to close the edit form
-    private void CancelEdit()
+    private void CancelEdit() //Ends the edit form
     {
         showEditForm = false;
         selectedMovie = null;
     }
-    private async Task UpdateMovie()
+    private async Task UpdateMovie() //Update Movie with edit information
     {
         try
         {

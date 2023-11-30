@@ -3,78 +3,80 @@
 @using Movie_and_TV_Tracker.Data.Models
 @inject NavigationManager NavigationManager
 
-<h3>TV Shows</h3>
+<h3 style="color: darkorange;">TV Show Tracker List</h3>
 
-<div>
-    <label>Name:</label>
+<div class="input-container">
+    <label style="color: darkorange;">Name:</label>
     <input @bind="tvShow.name" />
 </div>
-<div>
-    <label>Release Date:</label>
+<div class="input-container">
+    <label style="color: darkorange;">Release Date:</label>
     <input @bind="tvShow.release_date" />
 </div>
-<div>
-    <label>Number of Episodes:</label>
+<div class="input-container">
+    <label style="color: darkorange;">Number of Episodes Watched:</label>
     <input @bind="tvShow.number_of_episodes" type="number" />
 </div>
-<div>
-    <label>Watch Status:</label>
+<div class="input-container">
+    <label style="color: darkorange;">Watch Status:</label>
     <select @bind="tvShow.watch_status">
-        <option value="Want to Watch">Want to Watch</option>
-        <option value="Watching">Watching</option>
-        <option value="Dropped">Dropped</option>
+        <option value="Want to Watch" style="color: darkorange;"></option>
+        <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+        <option value="Watching" style="color: darkorange;">Watching</option>
+        <option value="Watched" style="color: darkorange;">Watched</option>
+        <option value="Dropped" style="color: darkorange;">Dropped</option>
     </select>
 </div>
 <br />
 <br />
 <br />
-<button @onclick="AddTVShow">Add TV Show</button>
+<button class="action-button" style="background-color: darkorange; color: black;" @onclick="AddTVShow">Add TV Show</button>
 
 @if (showEditForm)
 {
-    <div>
-        <h4>Edit TV Show</h4>
-        <div>
-            <label>Name:</label>
+    <div class="edit-form">
+        <h4 style="color: darkorange;">Edit TV Show</h4>
+        <div class="input-container">
+            <label style="color: darkorange;">Name:</label>
             <input @bind="selectedTVShow.name" />
         </div>
-        <div>
-            <label>Release Date:</label>
+        <div class="input-container">
+            <label style="color: darkorange;">Release Date:</label>
             <input @bind="selectedTVShow.release_date" />
         </div>
-        <div>
-            <label>Number of Episodes:</label>
+        <div class="input-container">
+            <label style="color: darkorange;">Number of Episodes:</label>
             <input @bind="selectedTVShow.number_of_episodes" type="number" />
         </div>
-        <div>
-            <label>Watch Status:</label>
+        <div class="input-container">
+            <label style="color: darkorange;">Watch Status:</label>
             <select @bind="selectedTVShow.watch_status">
-                <option value="Want to Watch">Want to Watch</option>
-                <option value="Watching">Watching</option>
-                <option value="Dropped">Dropped</option>
+                <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+                <option value="Watching" style="color: darkorange;">Watching</option>
+                <option value="Dropped" style="color: darkorange;">Dropped</option>
             </select>
         </div>
         <br />
-        <button @onclick="UpdateTVShow">Update TV Show</button>
-        <button @onclick="CancelEdit">Cancel</button>
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="UpdateTVShow">Update TV Show</button>
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="CancelEdit">Cancel</button>
     </div>
 }
 
 @if (tvShows == null)
 {
-    <p><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
+    <p style="color: darkorange;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th>Options</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Release Date</th>
-                <th>Number of Episodes</th>
-                <th>Watch Status</th>
+                <th style="color: darkorange;">Options</th>
+                <th style="color: darkorange;">ID</th>
+                <th style="color: darkorange;">Name</th>
+                <th style="color: darkorange;">Release Date</th>
+                <th style="color: darkorange;">Number of Episodes Watched</th>
+                <th style="color: darkorange;">Watch Status</th>
             </tr>
         </thead>
         <tbody>
@@ -83,21 +85,63 @@ else
                 <tr>
                     <td>
                         <!-- Edit button -->
-                        <button @onclick="() => ShowEditForm(tvShow)">Edit</button>
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => ShowEditForm(tvShow)">Edit</button>
 
                         <!-- Delete button -->
-                        <button @onclick="() => DeleteTVShow(tvShow.id)">Delete</button>
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => DeleteTVShow(tvShow.id)">Delete</button>
                     </td>
-                    <td>@tvShow.id</td>
-                    <td>@tvShow.name</td>
-                    <td>@tvShow.release_date</td>
-                    <td>@tvShow.number_of_episodes</td>
-                    <td>@tvShow.watch_status</td>
+                    <td style="color: darkorange;">@tvShow.id</td>
+                    <td style="color: darkorange;">@tvShow.name</td>
+                    <td style="color: darkorange;">@tvShow.release_date</td>
+                    <td style="color: darkorange;">@tvShow.number_of_episodes</td>
+                    <td style="color: darkorange;">@tvShow.watch_status</td>
                 </tr>
             }
         </tbody>
     </table>
+    <style>
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+            .input-container input,
+            .input-container select {
+                background-color: #333;
+                color: white;
+                border: 1px solid darkorange;
+                padding: 6px;
+                border-radius: 4px;
+            }
+
+        .action-button {
+            border: none;
+            padding: 8px 12px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .edit-form {
+            border: 2px solid darkorange;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+            .table th,
+            .table td {
+                border: 1px solid darkorange;
+                padding: 8px;
+                text-align: left;
+            }
+    </style>
 }
+
+
 
 @code {
     private List<TVShow> tvShows;
