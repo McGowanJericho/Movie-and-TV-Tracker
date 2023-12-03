@@ -3,80 +3,81 @@
 @using Movie_and_TV_Tracker.Data.Models
 @inject NavigationManager NavigationManager
 
-<h3 style="color: darkorange;">TV Show Tracker List</h3>
+<h3 style="color: forestgreen;">TV Show Tracker List</h3>
 
 <div class="input-container">
-    <label style="color: darkorange;">Name:</label>
+    <label style="color: forestgreen;">Name:</label>
     <input @bind="tvShow.name" />
 </div>
 <div class="input-container">
-    <label style="color: darkorange;">Release Date:</label>
+    <label style="color: forestgreen;">Release Date:</label>
     <input @bind="tvShow.release_date" />
 </div>
 <div class="input-container">
-    <label style="color: darkorange;">Number of Episodes Watched:</label>
+    <label style="color: forestgreen;">Number of Episodes Watched:</label>
     <input @bind="tvShow.number_of_episodes" type="number" />
 </div>
 <div class="input-container">
-    <label style="color: darkorange;">Watch Status:</label>
+    <label style="color: forestgreen;">Watch Status:</label>
     <select @bind="tvShow.watch_status">
-        <option value="Want to Watch" style="color: darkorange;"></option>
-        <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
-        <option value="Watching" style="color: darkorange;">Watching</option>
-        <option value="Watched" style="color: darkorange;">Watched</option>
-        <option value="Dropped" style="color: darkorange;">Dropped</option>
+        <option value="Want to Watch" style="color: forestgreen;"></option>
+        <option value="Want to Watch" style="color: forestgreen;">Want to Watch</option>
+        <option value="Watching" style="color: forestgreen;">Watching</option>
+        <option value="Watched" style="color: forestgreen;">Watched</option>
+        <option value="Dropped" style="color: forestgreen;">Dropped</option>
     </select>
 </div>
 <br />
 <br />
 <br />
-<button class="action-button" style="background-color: darkorange; color: black;" @onclick="AddTVShow">Add TV Show</button>
+<button class="action-button" style="background-color: forestgreen; color: black;" @onclick="AddTVShow">Add TV Show</button>
 
 @if (showEditForm)
 {
     <div class="edit-form">
-        <h4 style="color: darkorange;">Edit TV Show</h4>
+        <h4 style="color: forestgreen;">Edit TV Show</h4>
         <div class="input-container">
-            <label style="color: darkorange;">Name:</label>
+            <label style="color: forestgreen;">Name:</label>
             <input @bind="selectedTVShow.name" />
         </div>
         <div class="input-container">
-            <label style="color: darkorange;">Release Date:</label>
+            <label style="color: forestgreen;">Release Date:</label>
             <input @bind="selectedTVShow.release_date" />
         </div>
         <div class="input-container">
-            <label style="color: darkorange;">Number of Episodes:</label>
+            <label style="color: forestgreen;">Number of Episodes:</label>
             <input @bind="selectedTVShow.number_of_episodes" type="number" />
         </div>
         <div class="input-container">
-            <label style="color: darkorange;">Watch Status:</label>
+            <label style="color: forestgreen;">Watch Status:</label>
             <select @bind="selectedTVShow.watch_status">
-                <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
-                <option value="Watching" style="color: darkorange;">Watching</option>
-                <option value="Dropped" style="color: darkorange;">Dropped</option>
+                <option value="Want to Watch" style="color: forestgreen;">Want to Watch</option>
+                <option value="Watching" style="color: forestgreen;">Watching</option>
+                <option value="Watched" style="color: forestgreen;">Watched</option>
+                <option value="Dropped" style="color: forestgreen;">Dropped</option>
             </select>
         </div>
         <br />
-        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="UpdateTVShow">Update TV Show</button>
-        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="CancelEdit">Cancel</button>
+        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="UpdateTVShow">Update TV Show</button>
+        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="CancelEdit">Cancel</button>
     </div>
 }
 
 @if (tvShows == null)
 {
-    <p style="color: darkorange;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
+    <p style="color: forestgreen;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th style="color: darkorange;">Options</th>
-                <th style="color: darkorange;">ID</th>
-                <th style="color: darkorange;">Name</th>
-                <th style="color: darkorange;">Release Date</th>
-                <th style="color: darkorange;">Number of Episodes Watched</th>
-                <th style="color: darkorange;">Watch Status</th>
+                <th style="color: forestgreen;">Options</th>
+                <th style="color: forestgreen;">ID</th>
+                <th style="color: forestgreen;">Name</th>
+                <th style="color: forestgreen;">Release Date</th>
+                <th style="color: forestgreen;">Number of Episodes Watched</th>
+                <th style="color: forestgreen;">Watch Status</th>
             </tr>
         </thead>
         <tbody>
@@ -84,21 +85,20 @@ else
             {
                 <tr>
                     <td>
-                        <!-- Edit button -->
-                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => ShowEditForm(tvShow)">Edit</button>
+                        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="() => ShowEditForm(tvShow)">Edit</button>
 
-                        <!-- Delete button -->
-                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => DeleteTVShow(tvShow.id)">Delete</button>
+                        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="() => DeleteTVShow(tvShow.id)">Delete</button>
                     </td>
-                    <td style="color: darkorange;">@tvShow.id</td>
-                    <td style="color: darkorange;">@tvShow.name</td>
-                    <td style="color: darkorange;">@tvShow.release_date</td>
-                    <td style="color: darkorange;">@tvShow.number_of_episodes</td>
-                    <td style="color: darkorange;">@tvShow.watch_status</td>
+                    <td style="color: forestgreen;">@tvShow.id</td>
+                    <td style="color: forestgreen;">@tvShow.name</td>
+                    <td style="color: forestgreen;">@tvShow.release_date</td>
+                    <td style="color: forestgreen;">@tvShow.number_of_episodes</td>
+                    <td style="color: forestgreen;">@tvShow.watch_status</td>
                 </tr>
             }
         </tbody>
     </table>
+    }
     <style>
         .input-container {
             margin-bottom: 10px;
@@ -108,7 +108,7 @@ else
             .input-container select {
                 background-color: #333;
                 color: white;
-                border: 1px solid darkorange;
+                border: 1px solid forestgreen;
                 padding: 6px;
                 border-radius: 4px;
             }
@@ -121,7 +121,7 @@ else
         }
 
         .edit-form {
-            border: 2px solid darkorange;
+            border: 2px solid forestgreen;
             padding: 10px;
             margin-top: 20px;
         }
@@ -134,12 +134,12 @@ else
 
             .table th,
             .table td {
-                border: 1px solid darkorange;
+                border: 1px solid forestgreen;
                 padding: 8px;
                 text-align: left;
             }
     </style>
-}
+
 
 
 

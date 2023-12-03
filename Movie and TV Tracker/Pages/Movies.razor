@@ -3,78 +3,78 @@
 @using Movie_and_TV_Tracker.Data.Models
 @inject NavigationManager NavigationManager
 
-<h3 style="color: darkorange;">Movie Tracker List</h3>
+<h3 style="color: forestgreen;">Movie Tracker List</h3>
 
 <div class="input-container">
-    <label style="color: darkorange;">Title:</label>
+    <label style="color: forestgreen;">Title:</label>
     <input @bind="movie.title" />
 </div>
 <div class="input-container">
-    <label style="color: darkorange;">Release Date:</label>
+    <label style="color: forestgreen;">Release Date:</label>
     <input @bind="movie.release_date" />
 </div>
 <div class="input-container">
-    <label style="color: darkorange;">Runtime (min):</label>
+    <label style="color: forestgreen;">Runtime (min):</label>
     <input @bind="movie.runtime_in_min" type="number" />
 </div>
 <div class="input-container">
-    <label style="color: darkorange;">Watch Status:</label>
+    <label style="color: forestgreen;">Watch Status:</label>
     <select @bind="movie.watch_status">
-        <option value="Want to Watch" style="color: darkorange;"></option>
-        <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
-        <option value="Watching" style="color: darkorange;">Watched</option>
+        <option value="Want to Watch" style="color: forestgreen;"></option>
+        <option value="Want to Watch" style="color: forestgreen;">Want to Watch</option>
+        <option value="Watching" style="color: forestgreen;">Watched</option>
     </select>
 </div>
 <br />
 <br />
 <br />
-<button class="action-button" style="background-color: darkorange; color: black;" @onclick="AddMovie">Add Movie</button>
+<button class="action-button" style="background-color: forestgreen; color: black;" @onclick="AddMovie">Add Movie</button>
 
 @if (showEditForm)
 {
     <div class="edit-form">
-        <h4 style="color: darkorange;">Edit Movie</h4>
+        <h4 style="color: forestgreen;">Edit Movie</h4>
         <div class="input-container">
-            <label style="color: darkorange;">Title:</label>
+            <label style="color: forestgreen;">Title:</label>
             <input @bind="selectedMovie.title" />
         </div>
         <div class="input-container">
-            <label style="color: darkorange;">Release Date:</label>
+            <label style="color: forestgreen;">Release Date:</label>
             <input @bind="selectedMovie.release_date" />
         </div>
         <div class="input-container">
-            <label style="color: darkorange;">Runtime (min):</label>
+            <label style="color: forestgreen;">Runtime (min):</label>
             <input @bind="selectedMovie.runtime_in_min" type="number" />
         </div>
         <div class="input-container">
-            <label style="color: darkorange;">Watch Status:</label>
+            <label style="color: forestgreen;">Watch Status:</label>
             <select @bind="selectedMovie.watch_status">
-                <option value="Want to Watch" style="color: darkorange;"></option>
-                <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
-                <option value="Watched" style="color: darkorange;">Watched</option>
+                <option value="Want to Watch" style="color: forestgreen;"></option>
+                <option value="Want to Watch" style="color: forestgreen;">Want to Watch</option>
+                <option value="Watched" style="color: forestgreen;">Watched</option>
             </select>
         </div>
         <br />
-        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="UpdateMovie">Update Movie</button>
-        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="CancelEdit">Cancel</button>
+        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="UpdateMovie">Update Movie</button>
+        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="CancelEdit">Cancel</button>
     </div>
 }
 
 @if (movies == null)
 {
-    <p style="color: darkorange;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
+    <p style="color: forestgreen;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
 }
 else
 {
     <table class="movie-table">
         <thead>
             <tr>
-                <th style="color: darkorange; width: 15%;">Options</th>
-                <th style="color: darkorange">ID</th>
-                <th style="color: darkorange">Title</th>
-                <th style="color: darkorange">Release Date</th>
-                <th style="color: darkorange">Runtime (min)</th>
-                <th style="color: darkorange">Watch Status</th>
+                <th style="color: forestgreen; width: 15%;">Options</th>
+                <th style="color: forestgreen">ID</th>
+                <th style="color: forestgreen">Title</th>
+                <th style="color: forestgreen">Release Date</th>
+                <th style="color: forestgreen">Runtime (min)</th>
+                <th style="color: forestgreen">Watch Status</th>
             </tr>
         </thead>
         <tbody>
@@ -82,14 +82,14 @@ else
             {
                 <tr>
                     <td>
-                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => ShowEditForm(movie)">Edit</button>
-                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => DeleteMovie(movie.id)">Delete</button>
+                        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="() => ShowEditForm(movie)">Edit</button>
+                        <button class="action-button" style="background-color: forestgreen; color: black;" @onclick="() => DeleteMovie(movie.id)">Delete</button>
                     </td>
-                    <td style="color: darkorange;">@movie.id</td>
-                    <td style="color: darkorange;">@movie.title</td>
-                    <td style="color: darkorange;">@movie.release_date</td>
-                    <td style="color: darkorange;">@movie.runtime_in_min</td>
-                    <td style="color: darkorange;">@movie.watch_status</td>
+                    <td style="color: forestgreen;">@movie.id</td>
+                    <td style="color: forestgreen;">@movie.title</td>
+                    <td style="color: forestgreen;">@movie.release_date</td>
+                    <td style="color: forestgreen;">@movie.runtime_in_min</td>
+                    <td style="color: forestgreen;">@movie.watch_status</td>
                 </tr>
             }
         </tbody>
@@ -104,7 +104,7 @@ else
         .input-container select {
             background-color: #333; 
             color: white; 
-            border: 1px solid darkorange; 
+            border: 1px solid forestgreen;
             padding: 6px;
             border-radius: 4px;
         }
@@ -117,7 +117,7 @@ else
     }
 
     .edit-form {
-        border: 2px solid darkorange;
+        border: 2px solid forestgreen;
         padding: 10px;
         margin-top: 20px;
     }
@@ -130,7 +130,7 @@ else
 
         .movie-table th,
         .movie-table td {
-            border: 1px solid darkorange;
+            border: 1px solid forestgreen;
             padding: 8px;
             text-align: left;
         }
