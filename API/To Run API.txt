@@ -1,0 +1,3 @@
+To Run API open a terminal inside of the Python Code folder, and run main.py with uvicorn: 
+
+python -m uvicorn main:app --reload

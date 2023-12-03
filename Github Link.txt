@@ -1,0 +1,4 @@
+https://github.com/McGowanJericho/Movie-and-TV-Tracker
+
+
+This GITHUB just has commit changes for the VS Community Project, not the API. To run the API open the API folder and read the "To Run API.txt" file. 
