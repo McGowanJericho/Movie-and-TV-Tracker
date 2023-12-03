@@ -1,4 +1,21 @@
-﻿namespace Movie_and_TV_Tracker.Data.Models
+﻿/*
+*--------------------------------------------------------------------
+
+*File name: TVShowInputObject.cs
+
+* Project name: Movie and TV Tracker
+
+*--------------------------------------------------------------------
+
+* Author’s name and email: Jericho McGowan || mcgowanj2@etsu.edu
+
+* Course-Section: CSCI - 2910 - 001
+
+* Creation Date: 11 / 24 / 2023
+
+* -------------------------------------------------------------------
+*/
+namespace Movie_and_TV_Tracker.Data.Models
 {
     public class TVShowInputObject
     {
